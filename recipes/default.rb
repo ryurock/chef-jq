@@ -19,12 +19,13 @@ git "/tmp/jq" do
   action :checkout
   user "root"
   group "rbenv"
+  notifies :run, "execute[jq_install]", :immediately
 end
 
 # jqのインストール
 execute "jq_install" do
   cwd "/tmp/jq"
   command "autoreconf; ./configure; make; make install"
-  action :run
+  action :nothing
 end
 
